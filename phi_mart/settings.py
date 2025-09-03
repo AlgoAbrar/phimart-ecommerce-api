@@ -2,7 +2,8 @@ from pathlib import Path
 from datetime import timedelta
 from decouple import config
 import cloudinary
-
+import cloudinary.uploader
+from cloudinary.utils import cloudinary_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -11,9 +12,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-_-sw+995f4t48rwyxucty93nmor3r&u0(secce*$8+36=xcv3-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = [".vercel.app", '127.0.0.1']
+ALLOWED_HOSTS = [".vercel.app",'127.0.0.1']
 AUTH_USER_MODEL = 'users.User'
 
 # Application definition
@@ -28,7 +29,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'drf_yasg',
     'django_filters',
-    "corsheaders",
     'rest_framework',
     'djoser',
     'api',
@@ -36,13 +36,13 @@ INSTALLED_APPS = [
     'users',
     'order',
     "debug_toolbar",
+
 ]
 
 MIDDLEWARE = [
-    "corsheaders.middleware.CorsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -71,16 +71,13 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'phi_mart.wsgi.app'
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:5174',
-]
-
-
 INTERNAL_IPS = [
     # ...
     "127.0.0.1",
     # ...
 ]
+# Database
+# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 # DATABASES = {
 #     'default': {
